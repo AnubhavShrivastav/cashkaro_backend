@@ -7,10 +7,6 @@ const createBanner = async (req, res) => {
   try {
     const { brandName, title, imageUrl } = req.body;
 
-    if (!(imageUrl || title || brandName)) {
-      res.status(400).json({ Message: "Please Enter data in all field" });
-    }
-
     const product = await Banner.create({ brandName, title, imageUrl });
 
     return res

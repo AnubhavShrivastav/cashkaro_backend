@@ -4,9 +4,11 @@ import ConnectDB from "./DB/index.js";
 import banner from "./routes/BannerRoutes.js";
 import category from "./routes/categoryRoutes.js";
 import FlashDeal from "./routes/flashDealRoutes.js";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 dotenv.config({
   path: "./.env",
