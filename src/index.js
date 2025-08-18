@@ -4,6 +4,7 @@ import ConnectDB from "./DB/index.js";
 import banner from "./routes/BannerRoutes.js";
 import category from "./routes/categoryRoutes.js";
 import FlashDeal from "./routes/flashDealRoutes.js";
+import brand from "./routes/brandsRoutes.js";
 import cors from "cors";
 
 const app = express();
@@ -17,6 +18,7 @@ dotenv.config({
 app.use("/api", banner);
 app.use("/api", category);
 app.use("/api", FlashDeal);
+app.use("/api", brand);
 
 ConnectDB()
   .then(() => {
