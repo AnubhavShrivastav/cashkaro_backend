@@ -5,6 +5,7 @@ import banner from "./routes/BannerRoutes.js";
 import category from "./routes/categoryRoutes.js";
 import FlashDeal from "./routes/flashDealRoutes.js";
 import brand from "./routes/brandsRoutes.js";
+import products from "./routes/productRoutes.js";
 import cors from "cors";
 
 const app = express();
@@ -19,6 +20,7 @@ app.use("/api", banner);
 app.use("/api", category);
 app.use("/api", FlashDeal);
 app.use("/api", brand);
+app.use("/api", products);
 
 ConnectDB()
   .then(() => {
