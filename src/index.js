@@ -22,6 +22,11 @@ app.use("/api", FlashDeal);
 app.use("/api", brand);
 app.use("/api", products);
 
+app.get("/", (req, res) => {
+  res.send("Server is running 🚀");
+});
+
+
 ConnectDB()
   .then(() => {
     app.listen(process.env.PORT, () => {
