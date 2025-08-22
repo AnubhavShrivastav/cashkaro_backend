@@ -22,10 +22,9 @@ app.use("/api", FlashDeal);
 app.use("/api", brand);
 app.use("/api", products);
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Server is running 🚀");
 });
-
 
 ConnectDB()
   .then(() => {
