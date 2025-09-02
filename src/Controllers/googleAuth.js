@@ -1,0 +1,55 @@
+// import { ApiResponse } from "../utils/ApiResponse.js";
+// import { ApiError } from "../utils/ApiError.js";
+import { User } from "../model/user.schema.js";
+import { OAuth2Client } from "google-auth-library";
+import jwt from "jsonwebtoken";
+
+const client = new OAuth2Client(
+  "1035866504161-om2d5dopv4hln647gerge1n3o2o1tnbm.apps.googleusercontent.com"
+);
+
+const googleAuth = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    // 1. Verify Google token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+
+    // 2. Extract user info
+    const { sub, email, name, picture } = payload;
+
+    // 3. Save user in DB (upsert)
+    let user = await User.findOne({ googleId: sub });
+    if (!user) {
+      user = await User.create({
+        googleId: sub,
+        email,
+        name,
+        picture,
+      });
+    }
+
+    // 4. Create our own JWT
+    const myToken = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.CLIENT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    // 5. Send response
+    res.json({
+      message: "Login successful",
+      token: myToken,
+      user: { id: user._id, name: user.name, email: user.email },
+    });
+  } catch (err) {
+    console.error("Google Login Error:", err);
+    res.status(400).json({ error: "Invalid Google token" });
+  }
+};
+
+export { googleAuth };

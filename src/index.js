@@ -6,6 +6,7 @@ import category from "./routes/categoryRoutes.js";
 import FlashDeal from "./routes/flashDealRoutes.js";
 import brand from "./routes/brandsRoutes.js";
 import products from "./routes/productRoutes.js";
+import Login from "./routes/LoginRoutes.js"; 
 import cors from "cors";
 
 const app = express();
@@ -21,8 +22,9 @@ app.use("/api", category);
 app.use("/api", FlashDeal);
 app.use("/api", brand);
 app.use("/api", products);
+app.use("/api",Login)
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Server is running 🚀");
 });
 
