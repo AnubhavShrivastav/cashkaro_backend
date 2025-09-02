@@ -1,5 +1,5 @@
-// import { ApiResponse } from "../utils/ApiResponse.js";
-// import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { ApiError } from "../utils/ApiError.js";
 import { User } from "../model/user.schema.js";
 import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
@@ -8,7 +8,7 @@ const client = new OAuth2Client(
   "1035866504161-om2d5dopv4hln647gerge1n3o2o1tnbm.apps.googleusercontent.com"
 );
 
-const googleAuth = async (req, res) => {
+const createGoogleAuth = async (req, res) => {
   try {
     const { token } = req.body;
 
@@ -52,4 +52,17 @@ const googleAuth = async (req, res) => {
   }
 };
 
-export { googleAuth };
+const getGoogleAuth = async (req, res) => {
+  try {
+    const userData = await User.find();
+    return res
+      .status(201)
+      .json(new ApiResponse(201, userData, "User Fetched SuccessFully"));
+  } catch (error) {
+    return res
+      .status(400)
+      .json(new ApiError(400, "Failed To Fetched The User"));
+  }
+};
+
+export { createGoogleAuth, getGoogleAuth };
