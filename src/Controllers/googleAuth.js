@@ -4,21 +4,23 @@ import { User } from "../model/user.schema.js";
 import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
 
-const client = new OAuth2Client(
-  "1035866504161-om2d5dopv4hln647gerge1n3o2o1tnbm.apps.googleusercontent.com"
-);
+const client = new OAuth2Client(process.env.CLIENT_ID);
+console.log(client)
 
 const createGoogleAuth = async (req, res) => {
   try {
     const { token } = req.body;
+    console.log(token)
 
     // 1. Verify Google token
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.CLIENT_ID,
     });
-    const payload = ticket.getPayload();
+    console.log(ticket)
 
+    const payload = ticket.getPayload();
+    console.log(payload)
     // 2. Extract user info
     const { sub, email, name, picture } = payload;
 
