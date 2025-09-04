@@ -3,24 +3,30 @@ import { ApiError } from "../utils/ApiError.js";
 import { User } from "../model/user.schema.js";
 import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config({
+  path: "./.env",
+});
 
 const client = new OAuth2Client(process.env.CLIENT_ID);
-console.log(client)
+console.log(`CLIENTIDFROM.ENV: ${process.env.CLIENT_ID}`);
+console.log(`OAUTH2CLIENT: ${client._clientId}`);
 
 const createGoogleAuth = async (req, res) => {
   try {
     const { token } = req.body;
-    console.log(token)
+    console.log(`Token: ${token}`);
 
     // 1. Verify Google token
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.CLIENT_ID,
     });
-    console.log(ticket)
+    console.log(`Ticket: ${ticket.getUserId()}`);
 
     const payload = ticket.getPayload();
-    console.log(payload)
+    console.log(`payLoad: ${payload.given_name}`);
     // 2. Extract user info
     const { sub, email, name, picture } = payload;
 
