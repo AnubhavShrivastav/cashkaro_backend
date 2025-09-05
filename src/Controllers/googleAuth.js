@@ -38,6 +38,7 @@ const createGoogleAuth = async (req, res) => {
         email,
         name,
         picture,
+        authProvider: "Google",
       });
     }
 
@@ -48,15 +49,13 @@ const createGoogleAuth = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    // 5. Send response
-    res.json({
-      message: "Login successful",
-      token: myToken,
-      user: { id: user._id, name: user.name, email: user.email },
-    });
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, { token: myToken }, user, "Login Successfully")
+      );
   } catch (err) {
-    console.error("Google Login Error:", err);
-    res.status(400).json({ error: "Invalid Google token" });
+    return res.status(400).json(new ApiError(400, err));
   }
 };
 
