@@ -24,7 +24,7 @@ app.use("/api", brand);
 app.use("/api", products);
 app.use("/api",Login)
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.send("Server is running 🚀");
 });
 
