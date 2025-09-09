@@ -6,11 +6,13 @@ const UserSchmea = new Schema(
     email: { type: String, unique: true },
     name: String,
     picture: String,
-    authProvider: {type: String, enum: ["Google","Phone"]},
-    phone: {type: String, unique: true},
-    OTP: {type: Number}
+    authProvider: { type: String, enum: ["Google","Phone"] },
+    contactNo: { type: String },
+    OTP: { type: String}
   },
   { timestamps: true } 
 );
 
+
 export const User = mongoose.model("User", UserSchmea);
+
