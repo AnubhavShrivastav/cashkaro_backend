@@ -59,7 +59,7 @@ const createGoogleAuth = async (req, res) => {
   }
 };
 
-const getGoogleAuth = async (req, res) => {
+const getGoogleAuth = async (_req, res) => {
   try {
     const userData = await User.find();
     return res

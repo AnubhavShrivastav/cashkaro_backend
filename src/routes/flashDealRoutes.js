@@ -3,13 +3,13 @@ import { createFlashDeal, getFlashDeal } from "../Controllers/flashdeal.js";
 import { validateData } from "../middleware/validateMiddleware.js";
 import { FlashdealValidationSchema } from "../Validations/flashDealValidation.js";
 
-const FlashDeal = express.Router();
+const flashDeal = express.Router();
 
-FlashDeal.post(
+flashDeal.post(
   "/flashdeal",
   validateData(FlashdealValidationSchema),
   createFlashDeal
 );
-FlashDeal.get("/flashdeal", getFlashDeal);
+flashDeal.get("/flashdeal", getFlashDeal);
 
-export default FlashDeal;
+export default flashDeal;

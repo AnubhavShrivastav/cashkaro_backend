@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 import ConnectDB from "./DB/index.js";
 import banner from "./routes/BannerRoutes.js";
 import category from "./routes/categoryRoutes.js";
-import FlashDeal from "./routes/flashDealRoutes.js";
+import flashDeal from "./routes/flashDealRoutes.js";
 import brand from "./routes/brandsRoutes.js";
 import products from "./routes/productRoutes.js";
-import Login from "./routes/LoginRoutes.js"; 
+import login from "./routes/LoginRoutes.js";
 import cors from "cors";
 
 const app = express();
@@ -19,10 +19,10 @@ dotenv.config({
 
 app.use("/api", banner);
 app.use("/api", category);
-app.use("/api", FlashDeal);
+app.use("/api", flashDeal);
 app.use("/api", brand);
 app.use("/api", products);
-app.use("/api",Login)
+app.use("/api", login);
 
 app.get("/", (_req, res) => {
   res.send("Server is running 🚀");
