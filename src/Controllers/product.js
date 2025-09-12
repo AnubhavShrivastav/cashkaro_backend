@@ -17,22 +17,31 @@ const createProduct = async (req, res) => {
 };
 
 const getProduct = async (req, res) => {
-  try {
-    const product = await Product.aggregate([
-      {
-        $lookup: {
-          from: "brands",
-          localField: "brandInfo",
-          foreignField: "_id",
-          as: "brandDetails",
-        },
-      },
+  const { id } = req.params;
 
-      { $unwind: "$brandDetails" },
-    ]);
-    res
-      .status(200)
-      .json(new ApiResponse(200, product, "Products Fetched Successfully"));
+  try {
+    if (!id) {
+      const product = await Product.aggregate([
+        {
+          $lookup: {
+            from: "brands",
+            localField: "brandInfo",
+            foreignField: "_id",
+            as: "brandDetails",
+          },
+        },
+
+        { $unwind: "$brandDetails" },
+      ]);
+      return res
+        .status(200)
+        .json(new ApiResponse(200, product, "product fetched successfully"));
+    } else {
+      const product = await Product.find({ brandInfo: id });
+      return res
+        .status(200)
+        .json(new ApiResponse(200, product, "product fetched successfully"));
+    }
   } catch (error) {
     res.status(400).json(new ApiError(400, "Failed To Fetched Product"));
   }
